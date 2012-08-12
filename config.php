@@ -1,10 +1,10 @@
 <?php
 	setlocale(LC_ALL, 'en-GB');
 
-	$dbUser = "mediat_sound";
-	$dbPassword = "gle52N6WFrMR"; 
-	$dbName = "mediat_soundcloud";
-	$dbHost = "localhost";
+	$dbUser = "#";
+	$dbPassword = "#"; 
+	$dbName = "#";
+	$dbHost = "#";
 
 	$domain = "http://soundcloud.mediatech.si/playlistapp/";
 

@@ -1,4 +1,0 @@
-PlaylistApp
-===========
-
-PlaylistApp

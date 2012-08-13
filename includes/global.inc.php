@@ -30,7 +30,7 @@
 		header("Location: " . $client->getAuthorizeUrl());
 		exit();
 	} else {
-		// If the code variable is set, we use it to retrieve the access token, otherwise we set the access token using the one in the session
+		// If the code variable is set, we use it to retrieve the access token, otherwise we set the token by getting it from the session
 		if(isset($_GET['code']) and !isset($_SESSION['token'])) {
 			$code = $_GET['code'];
 			$_SESSION['token'] = $client->accessToken($code);

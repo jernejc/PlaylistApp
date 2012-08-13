@@ -106,7 +106,7 @@
 		<?php } ?> 
 		<?php 
 		if(isset($_SESSION['bookmarketID'])) { 
-			// If set, we display the bookmarked track to the, so the user can select a playlist to add it to
+			// If set, we display the bookmarked track to the user, se he can select a playlist to add it to
 			?>
 			SC.initialize({
 				client_id: clientID,

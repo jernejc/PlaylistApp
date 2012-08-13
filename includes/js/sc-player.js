@@ -603,9 +603,9 @@
     onDomReady  : function() {
       $('a.sc-player, div.sc-player').scPlayer();
     },
-    autoPlay: true,
+    autoPlay: false,
     continuePlayback: true,
-    randomize: true,
+    randomize: false,
     loadArtworks: 5,
     // the default Api key should be replaced by your own one
     // get it here http://soundcloud.com/you/apps/new

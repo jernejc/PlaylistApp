@@ -60,7 +60,7 @@ class PlaylistApp {
 
 	/**
 	* Add playlist
-	* Adds a news playlist for the current user
+	* Adds a new playlist for the current user
 	*
 	* @param string $title Playlist title.
 	* @param string $description Playlist description.
@@ -135,7 +135,7 @@ class PlaylistApp {
 
 	/**
 	* Insert track
-	* Returns a set of tracks for a given playlist ID.
+	* Inserts a new track into the database
 	*
 	* @param int $playlistID Playlist ID.
 	*
@@ -154,7 +154,7 @@ class PlaylistApp {
 
 	/**
 	* Remove track
-	* Removes a track from a plalist
+	* Removes a track from a playlist
 	*
 	* @param int $trackID Track ID.
 	* @param int $playlistID Playlist ID.
@@ -176,7 +176,7 @@ class PlaylistApp {
 	* Insert user
 	* Inserts the current user in the database. We save the access token as well, it might come in handy sometime in the future.
 	*
-	* @param int $accessToken Access token.
+	* @param string $accessToken Access token.
 	*
 	* @return boolean
 	* @access public
@@ -188,7 +188,7 @@ class PlaylistApp {
 
 	/**
 	* Get user
-	* Performs a database check if the a user with the current ID exists.
+	* Performs a database check if a user with the current ID exists.
 	*
 	* @return mixed
 	* @access public
@@ -203,7 +203,7 @@ class PlaylistApp {
 	* Checks the given value if it fits the rest of the parameters ( string / numeric, length etc.)
 	*
 	* @param string $value The value that is checked.
-	* @param string $type What type should the value be ( string or numeric).
+	* @param string $type What type should the value be (string or numeric).
 	* @param int $maxLength Max length of the value.
 	* @param int $minLength Min length of the value.
 	*
@@ -225,7 +225,7 @@ class PlaylistApp {
 					return $value;
 				}
 				else
-					die("Please provide a numeric value.".$value);
+					die("Please provide a numeric value.".var_dump($value));
 			break;
 			case 's': // String
 				return strip_tags(mysql_real_escape_string(trim($value)));
@@ -235,7 +235,7 @@ class PlaylistApp {
 
 	/**
 	* Excecute query
-	* Excecutes a given mysql query..
+	* Excecutes a given mysql query.
 	*
 	* @param string $sql The SQL statement to be excecuted.
 	*

@@ -1,12 +1,13 @@
 /**
 	Javascrpit "init" file.
-	Here we set up all the different javascript events, that set of different ajax calls to the hanlder, or just simply display some data to the user.
+	Here we set up all the different javascript events, that send of different ajax calls to the handler, or just simply display some data to the user.
 */
 
-var listLength = 30;
+var listLength = 20;
 var tracksDiv = $('#tracks');
 var playlistsDiv = $('#playlists');
 var editForm = $('#add');
+var autoPlay = 0;
 
 $.scPlayer.defaults.apiKey = clientID;
 
@@ -19,13 +20,13 @@ $(document).ready(function() {
 
 	/** Scrollable list of playlists **/
 
-	$(".scrollable").scrollable({ vertical: true, mousewheel: true }); // If the list of playlists is longer then 5, we make it "scrollable" for a better user experience
+	$(".scrollable").scrollable({ vertical: true, mousewheel: true }); // If the list of playlists is longer then 4, we make it "scrollable" for a better user experience
 
 	var scrollable = $(".scrollable").data("scrollable");
-	if(scrollable.getSize() < 4) {
+	if(scrollable.getSize() < 5) {
 		$('.next').addClass('disabled');
 	}
-	var size = 5;
+	var size = 4;
 
 	scrollable.onSeek(function(event, index) {
 
@@ -49,7 +50,7 @@ $(document).ready(function() {
 
 	$('#vnos').keyup(function(e){ // On every "keyup" we perform a track search on SoundCloud with the given search term.
 
-		$.scPlayer.defaults.autoPlay = false;
+		autoPlay = 0;
 		$('#playlists li').removeClass('hovered');
 
 		clearTimeout($.data(this, 'timer'));
@@ -160,7 +161,8 @@ $(document).ready(function() {
     	$(this).children('.manage').fadeToggle(50);
 
     }).on("click", ".playall", function(){ // The play all button loads the tracks from the playlist and automatically stars playing them.
-    	$.scPlayer.defaults.autoPlay = true;
+    	
+    	autoPlay = 1;
     	playlist = $(this).parent().parent();
 
     	playlistID = playlist.attr('data-playlistid');
@@ -181,7 +183,7 @@ $(document).ready(function() {
 		Track container events
     **/
 
-    $('#tracks').on("hover", "li", function(e) { // On hover we display the remove track icon, if its in the current playlist.
+    $('#tracks').on("hover", "li", function(e) { // On hover we display the remove track icon, if it's in the current playlist.
     	
     	$(this).children('.removeTrack').fadeToggle(50);
     
@@ -195,14 +197,35 @@ $(document).ready(function() {
 
     });
 
+    // Custom autoplay feature. The default one from the plugin didn't work properly since the tracks have a different strucure
+	$(document).bind('onPlayerInit.scPlayer', function(event) { 
+		
+		if(autoPlay == 1) {
+			var firstTrack = $('#tracks li').first();
+			var currentTrack = $('#tracks li').find('.playing');
+
+			currentTrack.find('a.sc-pause').click();
+
+			firstTrack.find('a.sc-play').click().addClass('hidden');
+			firstTrack.find('a.sc-pause').removeClass('hidden');
+		}
+
+	});
+
     $(document).bind('soundcloud:onMediaEnd', function(event, data) { // When the SoundCloud player finishes playing the current track, we find the next one and play it for the user.
 		
-		var prevId   = data.mediaId;
+		/** Bug in Chrome! **/
+		var prevId = data.mediaId;
 		var track = $('[data-trackid="'+prevId+'"]');
-		var next = track.next().find('a.sc-play');
+		var nextPlay = track.next().find('a.sc-play');
+		var nextPause = track.next().find('a.pause');
+
+		//console.log(nextPlay);
 		
-		if(next)
-			next.trigger('click');
+		if(nextPlay) {
+			nextPlay.trigger('click').addClass('hidden');
+			nextPause.removeClass('hidden');
+		}
 
 	});
 

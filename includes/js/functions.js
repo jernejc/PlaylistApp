@@ -3,8 +3,8 @@
 * Adds the given value to the notification element and displays it to the user.
 *
 * @param string text Text to display.
-* @param int speed Playlist description.
-* @param int delay Playlist ID.
+* @param int speed The speed at the element is displayed.
+* @param int delay The time the element is displayed.
 *
 */
 function triggerNotification(text, speed, delay){
@@ -108,10 +108,9 @@ function deletePlaylist(playlistID, playlistRow) {
 * Update playlist
 * Updates the given playlists.
 *
-* @param int playlistID The playlist ID
 * @param string title Playlist title
 * @param description title Playlist description
-* @param object playlistRow The HTML element that contains the playlist data.
+* @param int playlistID The playlist ID
 *
 */
 function updatePlayist(title, description, playlistID) {

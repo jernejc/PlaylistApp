@@ -1,3 +1,3 @@
 PlaylistApp
 
-A simple playlist managar for any SoundCloud track.
+A simple playlist manager for any SoundCloud track.

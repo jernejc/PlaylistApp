@@ -47,7 +47,7 @@
 					</div>
 					<span id="playlistCount"></span>
 					<div id="btns">
-						<a href="#" id="addPlaylist"><img src="includes/imgs/add.png" alt="Add" width="25" /> Add</a>
+						<a href="#" id="addPlaylist"><img src="includes/imgs/add.png" alt="Add" width="25" border="0" /> Add</a>
 					</div>
 					<div class="clear"></div>
 					<div class="scrollable vertical">

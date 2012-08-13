@@ -218,7 +218,7 @@ $(document).ready(function() {
 		var prevId = data.mediaId;
 		var track = $('[data-trackid="'+prevId+'"]');
 		var nextPlay = track.next().find('a.sc-play');
-		var nextPause = track.next().find('a.pause');
+		var nextPause = track.next().find('a.sc-pause');
 
 		//console.log(nextPlay);
 		

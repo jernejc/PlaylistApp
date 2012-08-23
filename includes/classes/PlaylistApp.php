@@ -46,7 +46,7 @@ class PlaylistApp {
 
 	/**
 	* Get playlist
-	* Retrieves a specific playlists for the given ID.
+	* Retrieves a specific playlist for the given ID.
 	*
 	* @param int $playlistID The wanted playlist ID.
 	*
@@ -55,7 +55,12 @@ class PlaylistApp {
 	*/
 	public function getPlaylist($playlistID) {
 		$sql = "SELECT * FROM `playlists` WHERE `playlist_id` = $playlistID LIMIT 1";
-		return $this->excecuteQuery($sql);
+		$result = mysql_query($sql);
+		
+		if($result != FALSE)
+			return mysql_fetch_assoc($result);
+		else
+			return FALSE;
 	}
 
 	/**
@@ -74,7 +79,7 @@ class PlaylistApp {
 		$result = mysql_query($sql);
 
 		if($result != FALSE)
-			return $result;
+			return mysql_insert_id();
 		else
 			return FALSE;
 	}
@@ -195,6 +200,35 @@ class PlaylistApp {
 	*/
 	public function getUser() {
 		$sql = "SELECT * FROM `users` WHERE `user_id` = $this->userID LIMIT 1";
+		return $this->excecuteQuery($sql);
+	}
+
+	/**
+	* Insert action
+	* Performs a database check if a user with the current ID exists.
+	*
+	* @param int $actionID The action ID.
+	* @param string $data JSON encoded data, for later re-use.
+	*
+	* @return mixed
+	* @access public
+	*/
+	public function insertAction($actionID, $data) {
+		$sql = "INSERT INTO `actions_users` (`action_id`,`user_id`,`data`) VALUES ($actionID, $this->userID, '$data')";
+		return $this->excecuteQuery($sql);
+	}
+
+	/**
+	* Get actions
+	* Retrivews all the actions for the current user
+	*
+	* @return mixed
+	* @access public
+	*/
+	public function getActions() {
+		$sql = "SELECT au.*, a.`name` FROM `actions_users` AS au
+				LEFT JOIN `actions` AS a USING (`action_id`) 
+				WHERE au.`user_id` = $this->userID";
 		return $this->excecuteQuery($sql);
 	}
 

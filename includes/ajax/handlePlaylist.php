@@ -3,6 +3,8 @@
 	// Handles all the ajax calls for Playlists
 	require_once('../global.inc.php');
 
+	$data = array();
+
 	if(!isset($_POST['task']))
 		die("We need to know what we're doing.");
 	else {
@@ -24,16 +26,22 @@
 				$response = $PlaylistApp->addPlaylist($title, $description);
 
 				if($response) {
-					$lastAdded = $PlaylistApp->getPlaylist(mysql_insert_id());
-					echo json_encode(mysql_fetch_assoc($lastAdded));
+					$lastAdded = json_encode($PlaylistApp->getPlaylist($response));
+					$PlaylistApp->insertAction(3, $lastAdded);
+					
+					echo $lastAdded;
 				} else
 					die('0');
 			break;
 			case 'delete': // Delete a playlist
 				$playlistID = $PlaylistApp->checkValue($_POST['playlistID'], 'n');
 				
-				if($PlaylistApp->deletePlaylist($playlistID)) 
+				if($PlaylistApp->deletePlaylist($playlistID)) {
+					$data['playlist_id'] = $playlistID;
+					$PlaylistApp->insertAction(4, json_encode($data));
+					
 					die('1');
+				}
 				else
 					die('0');
 			break;
@@ -42,8 +50,14 @@
 				$description = $PlaylistApp->checkValue($_POST['description'], 's', 255, 10);
 				$playlistID = $PlaylistApp->checkValue($_POST['playlistID'], 'n');
 
-				if($PlaylistApp->updatePlaylist($title, $description, $playlistID))
+				if($PlaylistApp->updatePlaylist($title, $description, $playlistID)) {
+					$data['playlist_id'] = $playlistID;
+					$data['title'] = $title;
+					$data['description'] = $description;
+					$PlaylistApp->insertAction(5, json_encode($data));
+
 					die('1');
+				}
 				else
 					die('0');
 			break;
